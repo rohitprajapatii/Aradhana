@@ -16,7 +16,7 @@ class Config {
   String consumerKey = 'ck_621921c59423ca5f8ceb69b2c0d4953cebeba29e';
   String consumerSecret = 'cs_57313cf7d08434f8894699c7fe57d204eb8af467';*/
 
-  String mapApiKey = 'AIzaSyCYVeF_NFV_t5uk463qd7hV02xbH2J2h6w';
+  String mapApiKey = 'AIzaSyBOD-xQ7u3BkkpolP5e-ykNvV4MUcA7Nmg';
 
   static Config _singleton = new Config._internal();
 

@@ -48,7 +48,7 @@
 
         <!-- Add your api key here Google Map -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzAsDAbCInw-fTifrddIdsWa-u1htbU4c"/>
+            android:value="AIzaSyBOD-xQ7u3BkkpolP5e-ykNvV4MUcA7Nmg"/>
 
         <!-- Add your api key facebook  -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
