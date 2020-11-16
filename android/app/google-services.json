@@ -1,41 +1,58 @@
 {
   "project_info": {
-    "project_number": "754723341007",
-    "firebase_url": "https://mstoreapp-21308.firebaseio.com",
-    "project_id": "mstoreapp-21308",
-    "storage_bucket": "mstoreapp-21308.appspot.com"
+    "project_number": "410241534161",
+    "firebase_url": "https://near-by-store-dea08.firebaseio.com",
+    "project_id": "near-by-store-dea08",
+    "storage_bucket": "near-by-store-dea08.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:754723341007:android:a5735968359ae9820f6dba",
+        "mobilesdk_app_id": "1:410241534161:android:a5fc1e01bda090f19f9df0",
         "android_client_info": {
-          "package_name": "mstoreapp.app"
+          "package_name": "com.mstoreapp.nearbystore"
         }
       },
       "oauth_client": [
         {
-          "client_id": "754723341007-o9nr87k58bgpd9ppkrft8osgqpm186sr.apps.googleusercontent.com",
+          "client_id": "410241534161-rna1a95lsre8db40hbv5uvm7r9u97cgu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mstoreapp.nearbystore",
+            "certificate_hash": "2840c1b4e07e547a439652ad4a2c479465b238f3"
+          }
+        },
+        {
+          "client_id": "410241534161-o6o4mpanpf34idjbguu8mgtq6cm5ij74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mstoreapp.nearbystore",
+            "certificate_hash": "c3bff8087ae3c03dca2f61acff43c71f2abc7192"
+          }
+        },
+        {
+          "client_id": "410241534161-10e234g126cc9o7ubci3msn1vieu4okb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDnKDEliDw7l0ZR7U6SuP_RfOZGdXD6rvQ"
+          "current_key": "AIzaSyCrw6azI1902QI3XAm0dHQ37HsjFkzLsGs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "754723341007-o9nr87k58bgpd9ppkrft8osgqpm186sr.apps.googleusercontent.com",
+              "client_id": "410241534161-10e234g126cc9o7ubci3msn1vieu4okb.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "754723341007-l5etrac39vjcot9nhhn03q7v18d6li1d.apps.googleusercontent.com",
+              "client_id": "410241534161-akraevrue20vat7nqbr7vf4bttpenaii.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "mstoreapp.app"
+                "bundle_id": "com.mstoreapp.nearbystore",
+                "app_store_id": "1539407567"
               }
             }
           ]

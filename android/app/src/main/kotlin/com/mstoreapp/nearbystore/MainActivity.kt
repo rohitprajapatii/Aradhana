@@ -1,4 +1,4 @@
-package mstoreapp.app
+package com.mstoreapp.nearbystore
 
 import io.flutter.embedding.android.FlutterActivity
 
