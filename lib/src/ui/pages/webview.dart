@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../config.dart';
 import '../../resources/api_provider.dart';
+
 
 class WebViewPage extends StatefulWidget {
   final String url;
@@ -16,9 +19,13 @@ class WebViewPage extends StatefulWidget {
 class _WebViewPageState extends State<WebViewPage> {
   final String url;
   bool _isLoadingPage = true;
+  final config = Config();
+  final cookieManager = WebviewCookieManager();
+  bool injectCookies = false;
 
   @override
   void initState() {
+    _seCookies();
     super.initState();
   }
 
@@ -27,12 +34,11 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          widget.title != null ? AppBar(title: Text(widget.title)) : AppBar(),
+      appBar: widget.title != null ? AppBar(title: Text(widget.title)) : AppBar(),
       body: Container(
         child: Stack(
           children: <Widget>[
-            WebView(
+            injectCookies ? WebView(
               onPageStarted: (String url) {
                 //
               },
@@ -46,17 +52,37 @@ class _WebViewPageState extends State<WebViewPage> {
                   _isLoadingPage = false;
                 });
               },
-            ),
+            ) : Container(),
             _isLoadingPage
                 ? Container(
-                    color: Colors.white,
-                    alignment: FractionalOffset.center,
-                    child: CircularProgressIndicator(),
-                  )
+              color: Colors.white,
+              alignment: FractionalOffset.center,
+              child: CircularProgressIndicator(),
+            )
                 : Container(),
           ],
         ),
       ),
     );
   }
+
+  _seCookies() async {
+    Uri uri = Uri.parse(config.url);
+    String domain = uri.host;
+    print('Domain: ' + domain);
+    ApiProvider apiProvider = ApiProvider();
+    List<Cookie> cookies = apiProvider.generateCookies();
+    apiProvider.cookieList.forEach((element) async {
+      await cookieManager.setCookies([
+        Cookie(element.name, element.value)
+          ..domain = domain
+        //..expires = DateTime.now().add(Duration(days: 10))
+        //..httpOnly = true
+      ]);
+    });
+    setState(() {
+      injectCookies = true;
+    });
+  }
+
 }

@@ -148,7 +148,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
                           width: 200,
                           child: Text(
                               "Sorry! We are not in your area. We will be there soon!",
-                              textAlign: TextAlign.center)),
+                              textAlign: TextAlign.center, style: TextStyle(color: Colors.black),)),
                       SizedBox(
                         height: 12,
                       ),

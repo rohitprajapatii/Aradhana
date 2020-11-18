@@ -200,20 +200,14 @@ class _CategoryListState extends State<CategoryList> {
       height: 80,
       child: CachedNetworkImage(
         imageUrl: category.image != null ? category.image : '',
-        imageBuilder: (context, imageProvider) => Card(
-          clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.all(0.0),
-          elevation: 0.0,
-          //shape: StadiumBorder(),
-          child: Ink.image(
-            child: InkWell(
-              onTap: () {
-                onCategoryClick(category);
-              },
-            ),
-            image: imageProvider,
-            fit: BoxFit.cover,
+        imageBuilder: (context, imageProvider) => Ink.image(
+          child: InkWell(
+            onTap: () {
+              onCategoryClick(category);
+            },
           ),
+          image: imageProvider,
+          fit: BoxFit.cover,
         ),
         placeholder: (context, url) => Card(
           margin: EdgeInsets.all(0.0),
