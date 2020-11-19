@@ -13,8 +13,8 @@ import '../checkout/webview.dart';
 
 class PageDetail extends StatefulWidget {
   final Post post;
-
-  const PageDetail({Key key, this.post}) : super(key: key);
+  final bloc = PageDetailBloc();
+  PageDetail({Key key, this.post}) : super(key: key);
 
   @override
   _PageDetailState createState() => _PageDetailState(post: post);
@@ -33,13 +33,13 @@ class _PageDetailState extends State<PageDetail> {
   void initState() {
     super.initState();
     if (this.post.title != null) {
-      bloc.addPost(this.post);
+      widget.bloc.addPost(this.post);
     }
-    bloc.postId.add(this.post.id);
+    widget.bloc.postId.add(this.post.id);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        bloc.fetchMoreComments(this.post.id);
+        widget.bloc.fetchMoreComments(this.post.id);
       }
     });
   }
@@ -49,15 +49,14 @@ class _PageDetailState extends State<PageDetail> {
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder<Post>(
-            stream: bloc.post,
+            stream: widget.bloc.post,
             builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? Text(snapshot.data.title.rendered)
-                  : Container();
+              return snapshot.hasData ? Text(snapshot.data.title.rendered) : Container();
             }),
+        
       ),
       body: StreamBuilder<Post>(
-          stream: bloc.post,
+          stream: widget.bloc.post,
           builder: (context, snapshot) {
             var height;
             if (snapshot.hasData) {
@@ -70,23 +69,26 @@ class _PageDetailState extends State<PageDetail> {
                 height = 0.0;
               } else
                 height = (aspectRatio * width);
+            } else if(snapshot.hasError) {
+              return Center(
+                child: Text('Nothing to show')
+              );
             }
             return snapshot.hasData
                 ? buildLayout1(height, snapshot, context)
                 : Center(child: CircularProgressIndicator());
           }),
       floatingActionButton: StreamBuilder<Post>(
-          stream: bloc.post,
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? FloatingActionButton(
-                    onPressed: () => shareFun(snapshot),
-                    tooltip: 'Increment',
-                    backgroundColor: getColorFromHex('#183055'),
-                    child: Icon(Icons.share),
-                  )
-                : Container();
-          }), // This trailing comma makes auto-formatting nicer for build methods.
+          stream: widget.bloc.post,
+        builder: (context, snapshot) {
+          return snapshot.hasData ? FloatingActionButton(
+            onPressed: () => shareFun(snapshot),
+            tooltip: 'Increment',
+            backgroundColor: getColorFromHex('#183055'),
+            child: Icon(Icons.share),
+          ) : Container();
+        }
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
@@ -195,7 +197,7 @@ class _PageDetailState extends State<PageDetail> {
                 ),
               ),
               StreamBuilder(
-                  stream: bloc.comments,
+                  stream: widget.bloc.comments,
                   builder: (context, AsyncSnapshot<CommentsModel> snapshot) {
                     if (snapshot.hasData) {
                       return buildList(snapshot);
@@ -305,7 +307,7 @@ class _PageDetailState extends State<PageDetail> {
                 ),
               ),
               StreamBuilder(
-                  stream: bloc.comments,
+                  stream: widget.bloc.comments,
                   builder: (context, AsyncSnapshot<CommentsModel> snapshot) {
                     if (snapshot.hasData) {
                       return buildList(snapshot);
@@ -334,15 +336,10 @@ class _PageDetailState extends State<PageDetail> {
         Container(
             height: 60,
             child: StreamBuilder(
-                stream: bloc.hasMoreCommets,
+                stream: widget.bloc.hasMoreCommets,
                 builder: (context, AsyncSnapshot<bool> snapshot) {
                   return snapshot.hasData && snapshot.data == false
-                      ? Center(
-                          child: Icon(
-                          FlutterIcons.document_ent,
-                          size: 150,
-                          color: Theme.of(context).focusColor,
-                        ))
+                      ? Center(child: Icon(FlutterIcons.document_ent, size: 150, color: Theme.of(context).focusColor,))
                       : Container();
                 }
                 //child: Center(child: CircularProgressIndicator())
@@ -411,4 +408,5 @@ class _PageDetailState extends State<PageDetail> {
         : print(
             "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
   }
+
 }

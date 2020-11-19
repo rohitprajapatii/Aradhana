@@ -117,9 +117,8 @@ class CheckoutBloc {
     //*** USE this If you have error in checkout. Usually when permalink not working ***//
     //final response = await apiProvider.post('/index.php/checkout?wc-ajax=checkout', formData);
     final response =
-        await apiProvider.post('/checkout?wc-ajax=checkout', formData);
+        await apiProvider.post('/?wc-ajax=checkout', formData);
     _placingOrderFetcher.sink.add(false);
-
     if (response.statusCode == 200) {
       OrderResult orderInfo = OrderResult.fromJson(json.decode(response.body));
       _orderResultFetcher.sink.add(orderInfo);

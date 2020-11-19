@@ -8,6 +8,7 @@ import '../../src/resources/api_provider.dart';
 import '../config.dart';
 
 class PostDetailBloc {
+
   final _postFetcher = BehaviorSubject<Post>();
   ValueStream<Post> get post => _postFetcher.stream;
   final api = ApiProvider();
@@ -35,7 +36,7 @@ class PostDetailBloc {
   }
 
   fetchPost(id) async {
-    if (!_post.containsKey(id)) {
+    if(!_post.containsKey(id)) {
       _post[id] = await _getPost(id);
     }
     _postFetcher.sink.add(_post[id]);
@@ -48,7 +49,7 @@ class PostDetailBloc {
 
   fetchComments(id) async {
     _commentsPage[id] = 1;
-    if (!_comments.containsKey(id)) {
+    if(!_comments.containsKey(id)) {
       _comments[id] = await _getComments(id);
     }
     _commentsFetcher.sink.add(_comments[id]);
@@ -57,7 +58,7 @@ class PostDetailBloc {
   fetchMoreComments(id) async {
     _commentsPage[id] = _commentsPage[id] + 1;
     CommentsModel comments = await _getComments(id);
-    if (comments.comments.isEmpty) {
+    if(comments.comments.isEmpty){
       _hasMoreCommentsFetcher.add(false);
     } else {
       _comments[id].comments.addAll(comments.comments);
@@ -66,11 +67,7 @@ class PostDetailBloc {
   }
 
   Future<CommentsModel> _getComments(id) async {
-    final url = config.url +
-        '/wp-json/wp/v2/comments?page=' +
-        _commentsPage[id].toString() +
-        '&post=' +
-        id.toString();
+    final url = config.url + '/wp-json/wp/v2/comments?page=' + _commentsPage[id].toString() + '&post=' + id.toString();
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return CommentsModel.fromJson(json.decode(response.body));
@@ -81,11 +78,13 @@ class PostDetailBloc {
   }
 
   Future<Post> _getPost(id) async {
-    final url = config.url + '/wp-json/wp/v2/pages/' + id.toString();
+    final url = config.url + '/wp-json/wp/v2/posts/' + id.toString();
+    print(url);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       return Post.fromJson(json.decode(response.body));
     } else {
+      _postFetcher.addError('Nothing to show');
       _hasMoreCommentsFetcher.add(false);
       throw Exception('Failed to fetch post');
     }
@@ -96,5 +95,3 @@ class PostDetailBloc {
     _postFetcher.close();
   }
 }
-
-final bloc = PostDetailBloc();

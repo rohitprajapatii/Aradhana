@@ -137,7 +137,9 @@ class ApiProvider {
   }
 
   Future<dynamic> post(String endPoint, Map data) async {
-    data.addAll(filter);
+    if(!endPoint.contains('orders')) {
+      data.addAll(filter);
+    }
     headers['content-type'] =
         'application/x-www-form-urlencoded; charset=utf-8';
     final response = await http.post(
